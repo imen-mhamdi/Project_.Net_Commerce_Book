@@ -1,0 +1,72 @@
+﻿@model List<Commerce.Models.Product>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h2 class="text-center mb-5">BOOK lists</h2>
+<div class="row mb-5">
+    <div class="col">
+        <a class="btn btn-primary" asp-controller="Products" asp-action="Create">New Book</a>
+    </div>
+    <div class="col">
+    </div>
+</div>
+<form method="get" action="@Url.Action("Search", "Products")">
+    <div class="form-row align-items-center">
+        <div class="col-auto">
+            <input type="text" name="searchName" class="form-control form-control-sm mb-2" id="searchName" placeholder="Search by Name">
+        </div>
+    </div>
+</form>
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+           
+            <th>Name</th>
+            <th>
+                author
+            </th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Created At</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var product in Model)
+            {
+                <tr>
+                    
+                    <td>@product.Name</td>
+                    <td>@product.Brand</td>
+                    <td>@product.Category</td>
+                    <td>@product.Price</td>
+                    <td>@product.Description</td>
+                    <td>
+                        <img src="~/products/@product.ImageFileName" width="100" />
+                    </td>
+                    <td>@product.CreatedAt.ToString("MM/dd/yyyy")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@product.Id" asp-controller="Products" class="btn btn-danger">Edit</a>  
+                        <a asp-action="Delete" asp-route-id="@product.Id" asp-controller="Products" class="btn btn-warning">Delete</a>
+                    </td>
+
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="9">Aucun produit trouvé</td>
+            </tr>
+        }
+    </tbody>
+</table>
